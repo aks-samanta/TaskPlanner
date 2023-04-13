@@ -34,6 +34,7 @@ public class TaskServiceImpl implements TaskServices {
 				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
 
 		Task task = modelMapper.map(taskDto, Task.class);
+		task.setCreatedAt(new Date());
 		task.setUser(user);
 
 		Task savedTask = taskRepo.save(task);
@@ -83,7 +84,7 @@ public class TaskServiceImpl implements TaskServices {
 		Task task = taskRepo.findByIdAndUser(taskId, user).orElseThrow(
 				() -> new TaskNotFoundException("Task not found with ID: " + taskId + " for user ID: " + userId));
 
-		task.setHasRemidner(!task.getHasRemidner());
+		task.setHasReminder(!task.getHasReminder());
 
 		Task savedTask = taskRepo.save(task);
 		return modelMapper.map(savedTask, TaskDto.class);

@@ -43,5 +43,7 @@ public class UserDto {
 	@NotNull(message = "Last name must not be null")
 	private String lastName;
 	
+	@JsonProperty(access = Access.READ_ONLY)
+	private final String role = "ROLE_USER";
 }
 

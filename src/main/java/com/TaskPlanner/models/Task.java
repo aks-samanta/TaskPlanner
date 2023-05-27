@@ -38,7 +38,7 @@ public class Task {
 	
 	private String description;
 	private Boolean isComplete = false;
-	private Boolean hasRemidner;
+	private Boolean hasReminder;
 
 	
 	@ManyToOne

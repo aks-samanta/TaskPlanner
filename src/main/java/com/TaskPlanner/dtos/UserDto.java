@@ -45,5 +45,7 @@ public class UserDto {
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	private final String role = "ROLE_USER";
+	
+	private String profileImageUrl;
 }
 

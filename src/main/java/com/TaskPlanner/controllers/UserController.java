@@ -51,7 +51,7 @@ public class UserController {
 	public ResponseEntity<UserDto> getLoggedInCustomerDetailsHandler(Authentication auth) {
 
 		UserDto userDto = userServices.getUserByUsername(auth.getName());
-		
+
 		// to get the token in body, pass HttpServletResponse inside this method
 		// parameter
 		// System.out.println(response.getHeaders(SecurityConstants.JWT_HEADER));
@@ -81,6 +81,14 @@ public class UserController {
 	public ResponseEntity<UserDto> getUser() throws UserNotFoundException {
 		UserDto user = userServices.getUser(getCurrentUserId());
 		return ResponseEntity.ok(user);
+	}
+
+	@PutMapping("/update")
+	@PreAuthorize("hasAuthority('ROLE_USER')")
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto) throws UserNotFoundException {
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		UserDto updatedUser = userServices.updateUser(userDto);
+		return ResponseEntity.ok(updatedUser);
 	}
 
 	// Helper method to get the ID of the currently logged-in user from the Spring

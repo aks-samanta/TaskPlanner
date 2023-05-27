@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -74,5 +76,34 @@ public class UserServiceImpl implements UserServices {
 	public UserDto getUserByUsername(String username) {
 
 		return modelMapper.map(userRepo.findByUsername(username), UserDto.class);
+	}
+
+	@Override
+	public UserDto updateUser(UserDto userDto) throws UserNotFoundException {
+		
+		String userEmail;
+
+		// Get the authentication object from the security context
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (auth != null) {
+			userEmail = auth.getPrincipal().toString();
+		} else {
+			throw new UserNotFoundException("Login Expired...");
+		}
+
+		// Find the customer by email
+		User user = userRepo.findByUsername(userEmail).get();
+		
+		user.setFirstName(userDto.getFirstName());
+		user.setLastName(userDto.getLastName());
+		if(userDto.getProfileImageUrl() != "") {
+			user.setProfileImageUrl(userDto.getProfileImageUrl());
+		}
+		user.setPassword(userDto.getPassword());
+		user = this.userRepo.save(user);
+		
+		return this.modelMapper.map(user, UserDto.class);
+		
 	}
 }

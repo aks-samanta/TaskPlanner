@@ -70,7 +70,11 @@ public class TaskServiceImpl implements TaskServices {
 		Task task = taskRepo.findByIdAndUser(taskId, user).orElseThrow(
 				() -> new TaskNotFoundException("Task not found with ID: " + taskId + " for user ID: " + userId));
 
-		modelMapper.map(updatedTaskDto, task);
+		task.setDeadline(updatedTaskDto.getDeadline());
+		task.setDescription(updatedTaskDto.getDescription());
+		task.setHasReminder(updatedTaskDto.getHasReminder());
+		task.setIsComplete(updatedTaskDto.getIsComplete());
+		task.setTitle(updatedTaskDto.getTitle());
 
 		Task savedTask = taskRepo.save(task);
 		return modelMapper.map(savedTask, TaskDto.class);

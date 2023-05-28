@@ -69,7 +69,7 @@ public class TaskController {
 	}
 
 	// Endpoint to update a specific task of the logged-in user
-	@PutMapping("/{taskId}")
+	@PutMapping("/update/{taskId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<TaskDto> updateTask(@Valid @RequestBody TaskDto updatedTask, @PathVariable Integer taskId)
 			throws UserNotFoundException, TaskNotFoundException {

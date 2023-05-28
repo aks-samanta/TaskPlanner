@@ -45,8 +45,7 @@ public class TaskDto {
 	@JsonProperty(access = Access.READ_ONLY)
 	private Boolean isComplete = false;
 
-	@NotBlank(message = "hasRemidner must not be blank")
-	@NotNull(message = "hasRemidner must not be null")
+	@NotNull(message = "hasReminder must not be null")
 	private Boolean hasReminder;
 
 }

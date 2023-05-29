@@ -22,7 +22,6 @@ import lombok.Setter;
 public class TaskDto {
 
 	@JsonProperty(access = Access.READ_ONLY)
-	@NotNull(message = "Id must not be null")
 	private Integer id;
 
 	@NotBlank(message = "Title must not be blank")
@@ -42,8 +41,7 @@ public class TaskDto {
 	@NotNull(message = "Description must not be null")
 	private String description;
 
-	@JsonProperty(access = Access.READ_ONLY)
-	private Boolean isComplete = false;
+	private Boolean isComplete;
 
 	@NotNull(message = "hasReminder must not be null")
 	private Boolean hasReminder;

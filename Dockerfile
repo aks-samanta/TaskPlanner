@@ -4,6 +4,6 @@ WORKDIR /app
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /app/target/taskPlanner-0.0.1-SNAPSHOT.jar /app/taskPlanner.jar
+COPY --from=build /app/target/TaskPlanner-0.0.1-SNAPSHOT.jar /app/TaskPlanner.jar
 EXPOSE 8899
-ENTRYPOINT ["java","-jar","/app/taskPlanner.jar"]
+ENTRYPOINT ["java","-jar","/app/TaskPlanner.jar"]
